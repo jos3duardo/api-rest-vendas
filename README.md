@@ -12,3 +12,15 @@ Cadastro de:
     - atualização de perfil
     - atualização de avatar
 
+
+subindo container com banco de dados postgres
+```bash
+docker run --name postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+```
+
+
+Generating a UUID in Postgres for Insert statement
+```bash
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+```
+
