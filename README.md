@@ -24,3 +24,12 @@ Generating a UUID in Postgres for Insert statement
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
 
+criando uma migration
+```bash
+yarn typeorm migration:create -n CreateProducts
+```
+
+Rodando a migration
+```bash
+yarn typeorm migration:run
+```
