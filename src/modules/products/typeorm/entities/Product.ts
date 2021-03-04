@@ -1,12 +1,12 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('produtos')
-class Produto {
+class Product {
     @PrimaryGeneratedColumn('uuid')
     id: string;
     
     @Column()
-    name: string;
+    nome: string;
     
     @Column('decimal')
     preco: number;
@@ -21,4 +21,4 @@ class Produto {
     updated_at: Date;
 }
 
-export default Produto
+export default Product
