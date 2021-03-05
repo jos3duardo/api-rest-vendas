@@ -6,13 +6,13 @@ class Product {
     id: string;
     
     @Column()
-    nome: string;
+    name: string;
     
     @Column('decimal')
-    preco: number;
+    price: number;
 
     @Column('int')
-    quantidade: number;
+    quantity: number;
     
     @CreateDateColumn()
     created_at: Date;
