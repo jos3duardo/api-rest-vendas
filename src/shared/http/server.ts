@@ -1,4 +1,4 @@
-import 'reflect-metadata'
+import 'reflect-metadata';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
@@ -6,11 +6,14 @@ import { errors } from 'celebrate';
 import routes from './routes';
 import AppError from '../errors/AppError';
 import '@shared/typeorm';
+import uploads from '@config/uploads';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use('/files', express.static(uploads.directory))
 
 app.use(routes);
 
