@@ -23,19 +23,14 @@ class ResetPasswordService {
         if (!userToken){
             throw new AppError('User Token does not exists.')
         }
-
         
         const user = await userRepository.findByUUID(userToken.user_id)
-
-        console.log(user)
 
         if (!user){
             throw new AppError('User does not exists.')
         }
-        
         const tokeCreatedAt = userToken.created_at;
         const compareDate = addHours(tokeCreatedAt,2);
-        
         
         if (isAfter(Date.now(), compareDate)){
             throw new AppError('Token expired.')
