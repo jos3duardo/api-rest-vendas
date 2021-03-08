@@ -20,9 +20,6 @@ class UserRepository extends Repository<User> {
             },
         });
 
-        console.log('find by id no repository')
-        console.log(user)
-        
         return user;
     }
 

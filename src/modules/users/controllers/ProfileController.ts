@@ -8,11 +8,7 @@ export default class ProfileController {
         const showProfile = new ShowProfileService();
         const user_id = request.user.id;
         
-        console.log(user_id)
-        console.log('ac9db015-3ac7-438d-b5e7-8d8dba6002f3')
-        
         const user = await showProfile.execute({ user_id });
-        console.log(user)        
         return response.json(user)
     }
 
