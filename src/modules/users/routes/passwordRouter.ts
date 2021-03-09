@@ -4,11 +4,11 @@ import SessionControlle from '../controllers/SessionControlle';
 import ForgotPasswordController from '@modules/users/controllers/ForgotPasswordController';
 import ResetPasswordController from '@modules/users/controllers/ResetPasswordController';
 
-const passwordRoutes = Router();
+const passwordRouter = Router();
 const forgotPasswordController = new ForgotPasswordController();
 const resetPassowdController = new ResetPasswordController(); 
 
-passwordRoutes.post(
+passwordRouter.post(
     '/forgot',
     celebrate({
         [Segments.BODY]: {
@@ -18,7 +18,7 @@ passwordRoutes.post(
     forgotPasswordController.create
 );
 
-passwordRoutes.post(
+passwordRouter.post(
     '/reset',
     celebrate({
         [Segments.BODY]: {
@@ -33,4 +33,4 @@ passwordRoutes.post(
 );
 
 
-export default passwordRoutes;
+export default passwordRouter;

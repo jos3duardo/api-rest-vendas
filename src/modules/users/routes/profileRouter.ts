@@ -3,17 +3,17 @@ import { celebrate, Joi, Segments } from 'celebrate';
 import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
 import ProfileController from '@modules/users/controllers/ProfileController';
 
-const profileRoutes = Router();
+const profileRouter = Router();
 const profileController = new ProfileController();
 
-profileRoutes.use(isAuthenticated)
+profileRouter.use(isAuthenticated)
 
-profileRoutes.get(
+profileRouter.get(
     '/', 
     profileController.show
 );
 
-profileRoutes.put(
+profileRouter.put(
     '/',
     celebrate({
         [Segments.BODY]: {
@@ -32,4 +32,4 @@ profileRoutes.put(
     profileController.update
 );
 
-export default profileRoutes;
+export default profileRouter;

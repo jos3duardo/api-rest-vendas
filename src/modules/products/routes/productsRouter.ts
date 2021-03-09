@@ -2,12 +2,12 @@ import { Router } from 'express'
 import ProductsController from '../controllers/ProductsController';
 import { celebrate, Joi, Segments } from 'celebrate';
 
-const productsRoutes = Router();
+const productsRouter = Router();
 const productsController = new ProductsController()
 
-productsRoutes.get('/', productsController.index);
+productsRouter.get('/', productsController.index);
 
-productsRoutes.get(
+productsRouter.get(
     '/:id',
     celebrate({
         [Segments.PARAMS]: {
@@ -17,7 +17,7 @@ productsRoutes.get(
     productsController.show
 );
 
-productsRoutes.post(
+productsRouter.post(
     '/',
     celebrate({
         [Segments.BODY]: {
@@ -29,7 +29,7 @@ productsRoutes.post(
     productsController.create
 );
 
-productsRoutes.put(
+productsRouter.put(
     '/:id',
     celebrate({
         [Segments.BODY]: {
@@ -44,7 +44,7 @@ productsRoutes.put(
     productsController.update
 );
 
-productsRoutes.delete(
+productsRouter.delete(
     '/:id',
     celebrate({
         [Segments.PARAMS]: {
@@ -54,4 +54,4 @@ productsRoutes.delete(
     productsController.delete
 );
 
-export default productsRoutes;
+export default productsRouter;

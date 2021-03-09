@@ -3,14 +3,14 @@ import CustomerController from '../controllers/CustomerController';
 import { celebrate, Joi, Segments } from 'celebrate';
 import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
 
-const customersRoutes = Router();
+const customersRouter = Router();
 const customersController = new CustomerController()
 
-customersRoutes.use(isAuthenticated)
+customersRouter.use(isAuthenticated)
 
-customersRoutes.get('/', customersController.index);
+customersRouter.get('/', customersController.index);
 
-customersRoutes.get(
+customersRouter.get(
     '/:id',
     celebrate({
         [Segments.PARAMS]: {
@@ -20,7 +20,7 @@ customersRoutes.get(
     customersController.show
 );
 
-customersRoutes.post(
+customersRouter.post(
     '/',
     celebrate({
         [Segments.BODY]: {
@@ -31,7 +31,7 @@ customersRoutes.post(
     customersController.create
 );
 
-customersRoutes.put(
+customersRouter.put(
     '/:id',
     celebrate({
         [Segments.BODY]: {
@@ -45,7 +45,7 @@ customersRoutes.put(
     customersController.update
 );
 
-customersRoutes.delete(
+customersRouter.delete(
     '/:id',
     celebrate({
         [Segments.PARAMS]: {
@@ -55,4 +55,4 @@ customersRoutes.delete(
     customersController.delete
 );
 
-export default customersRoutes;
+export default customersRouter;

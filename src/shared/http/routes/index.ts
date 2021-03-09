@@ -1,18 +1,20 @@
 import {Router} from 'express';
-import productsRoutes from '@modules/products/routes/products.routes';
-import usersRoutes from '@modules/users/routes/user.routes'
-import sessionRoutes from '@modules/users/routes/session.routes';
-import passwordRoutes from '@modules/users/routes/password.routes'
-import profileRoutes from '@modules/users/routes/profile.routes';
-import customersRoutes from '@modules/customers/routes/customer.routes';
+import productsRouter from '@modules/products/routes/productsRouter';
+import usersRouter from '@modules/users/routes/user.routes'
+import sessionRouter from '@modules/users/routes/sessionRouter';
+import passwordRouter from '@modules/users/routes/passwordRouter'
+import profileRouter from '@modules/users/routes/profileRouter';
+import customersRouter from '@modules/customers/routes/customer.routes';
+import ordersRouter from '@modules/orders/routes/orders.routes';
 const routes = Router()
 
-routes.use('/products', productsRoutes);
-routes.use('/users', usersRoutes);
-routes.use('/sessions', sessionRoutes);
-routes.use('/password', passwordRoutes)
-routes.use('/profile', profileRoutes)
-routes.use('/customers', customersRoutes)
+routes.use('/products', productsRouter);
+routes.use('/users', usersRouter);
+routes.use('/sessions', sessionRouter);
+routes.use('/password', passwordRouter);
+routes.use('/profile', profileRouter);
+routes.use('/customers', customersRouter);
+routes.use('/orders', ordersRouter)
 
 routes.get('/',((req, res) => {
     return res.json({message: 'api online'})

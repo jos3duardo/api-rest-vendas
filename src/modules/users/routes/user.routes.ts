@@ -6,19 +6,19 @@ import isAuthenticated from '@shared/http/middlewares/isAuthenticated'
 import uploadConfig from '@config/uploads';
 import UserAvatarController from '@modules/users/controllers/UserAvatarController';
 
-const usersRoutes = Router();
+const usersRouter = Router();
 const usersController = new UserController();
 const usersAvatarController = new UserAvatarController();
 
 const upload = multer(uploadConfig)
 
-usersRoutes.get(
+usersRouter.get(
     '/', 
     isAuthenticated, 
     usersController.index
 );
 
-usersRoutes.post(
+usersRouter.post(
     '/',
     celebrate({
         [Segments.BODY]: {
@@ -30,7 +30,7 @@ usersRoutes.post(
     usersController.create
 );
 
-usersRoutes.patch(
+usersRouter.patch(
     '/avatar',
     isAuthenticated,
     upload.single('avatar'),
@@ -38,4 +38,4 @@ usersRoutes.patch(
 )
 
 
-export default usersRoutes;
+export default usersRouter;
