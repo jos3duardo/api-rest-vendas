@@ -17,12 +17,20 @@ subindo container com banco de dados postgres
 ```bash
 docker run --name postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 ```
-
-
-subindo container do redis
+container do servidor redis
 ```bash
 docker run --name redis -p 6379:6379 -d -t redis:alpine
 ```
+
+Usando RedisInsight  como cliente redis  
+container do cliente redis
+```bash
+docker run --name redis-client -v redisinsight:/db -p 8001:8001 -d -t redislabs/redisinsight:latest
+```
+
+depois de rodar esse comando o cliente redis fica disponivel nesta rota  
+[http://localhost:8001](http://localhost:8001/)
+
 Generating a UUID in Postgres for Insert statement
 ```bash
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
