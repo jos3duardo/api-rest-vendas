@@ -19,6 +19,10 @@ docker run --name postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 ```
 
 
+subindo container do redis
+```bash
+docker run --name redis -p 6379:6379 -d -t redis:alpine
+```
 Generating a UUID in Postgres for Insert statement
 ```bash
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
