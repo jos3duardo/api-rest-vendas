@@ -1,6 +1,6 @@
 import { getCustomRepository } from 'typeorm';
-import UserTokensRepository from '@modules/users/typeorm/repositories/UserTokensRepository';
-import UserRepository from '@modules/users/typeorm/repositories/UserRepository';
+import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
+import UserRepository from '@modules/users/infra/typeorm/repositories/UserRepository';
 import AppError from '@shared/errors/AppError';
 import EtherealMail from '@config/mail/EtherealMail';
 import path from 'path';
