@@ -1,28 +1,34 @@
-import { getCustomRepository } from 'typeorm';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 import UserRepository from '@modules/users/infra/typeorm/repositories/UserRepository';
 import AppError from '@shared/errors/AppError';
 import EtherealMail from '@config/mail/EtherealMail';
 import path from 'path';
+import { ISendForgotPasswordEmail } from '@modules/users/domain/models/ISendForgotPasswordEmail';
+import { inject, injectable } from 'tsyringe';
+import { IUserRepository } from '@modules/users/domain/repositories/IUserRepository';
+import { IUserTokenRepository } from '@modules/users/domain/repositories/IUserTokenRepository';
 
-interface IRequest {
-    email: string;
-}
-
-
+@injectable()
 class SendForgotPasswordEmailService {
-    public async execute({ email }: IRequest): Promise<void> {
-        const userRepository = getCustomRepository(UserRepository);
-        const userTokenRepository = getCustomRepository(UserTokensRepository);
+    
+    constructor(
+        @inject('UserRepository')
+        private userRepository: IUserRepository,
+
+        @inject('UserTokensRepository')
+        private userTokenRepository: IUserTokenRepository,
+    ) {}
+    
+    public async execute({ email }: ISendForgotPasswordEmail): Promise<void> {
      
-        const user = await userRepository.findByEmail(email);
+        const user = await this.userRepository.findByEmail(email);
         
         
         if (!user){
             throw new AppError('USer does not exists.')
         }
 
-        const { token } = await userTokenRepository.generate(user.id);
+        const { token } = await this.userTokenRepository.generate(user.id);
         
         const forgotPasswordTemplate = path.resolve(__dirname, '..', 'views', 'forgot_password.hbs');
         

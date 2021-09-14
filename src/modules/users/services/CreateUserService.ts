@@ -1,36 +1,41 @@
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
-import { getCustomRepository } from 'typeorm';
-import User from '../infra/typeorm/entities/User';
-import UserRepository from '../infra/typeorm/repositories/UserRepository';
-import { hash } from 'bcryptjs';
+import { ICreateUser } from '@modules/users/domain/models/ICreateUser';
+import { IUser } from '@modules/users/domain/models/IUser';
+import { IUserRepository } from '@modules/users/domain/repositories/IUserRepository';
+import { IHashProvider } from '@modules/users/providers/HashProvider/models/IHashProvider';
 
-interface IRequest {
-    name: string;
-    email: string;
-    password: string;
-}
-
+@injectable()
 class CreateUserService {
-    public async execute({ name, email, password }: IRequest): Promise<User> {
+    
+    constructor(
+       @inject('UserRepository')
+       private userRepository: IUserRepository,
+
+       @inject('HashProvider')
+       private hashProvider: IHashProvider
+    ) {}
+    
+    public async execute({ name, email, password }: ICreateUser): Promise<IUser> {
         
-        const userRepository = getCustomRepository(UserRepository);
-        const userExists = await userRepository.findByEmail(email);
+        const userExists = await this.userRepository.findByEmail(email);
 
         if (userExists) {
             throw new AppError('Email address is already ready used');
         }
 
-        const hashedPassword = await hash(password, 8);
+        console.log('aqui');
+        const hashedPassword = await this.hashProvider.generateHash(password);
         
-        const user = userRepository.create({
-            name,
-            email,
-            password: hashedPassword,
-        });
-
-        await userRepository.save(user);
-        
-        return user;
+        try {
+            return await this.userRepository.create({
+                name,
+                email,
+                password: hashedPassword,
+            });
+        } catch (e) {
+            throw new AppError(e.merge);
+        }
     }
 }
 

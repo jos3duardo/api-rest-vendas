@@ -6,10 +6,11 @@ import {
     PrimaryGeneratedColumn, 
     UpdateDateColumn 
 } from 'typeorm';
-import OrdersProducts from '../../../../orders/infra/typeorm/entities/OrderProducts';
+import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrderProducts';
+import { IProduct } from '@modules/products/domain/models/IProduct';
 
 @Entity('products')
-class Product {
+class Product implements IProduct{
     @PrimaryGeneratedColumn('uuid')
     id: string;
 

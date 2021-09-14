@@ -1,47 +1,49 @@
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
-import { getCustomRepository } from 'typeorm';
-import User from '../infra/typeorm/entities/User';
-import UserRepository from '../infra/typeorm/repositories/UserRepository';
-import { sign } from 'jsonwebtoken';
+import { sign, Secret } from 'jsonwebtoken';
 import authConfig from '@config/auth';
-import { compare } from 'bcryptjs';
+import { ICreateSession } from '../domain/models/ICreateSession';
+import { IUserAuthenticated } from '../domain/models/IUserAuthenticated';
+import { IUserRepository } from '@modules/users/domain/repositories/IUserRepository';
+import { IHashProvider } from '@modules/users/providers/HashProvider/models/IHashProvider';
 
-interface IRequest {
-    email: string;
-    password: string;
-}
-
-interface IResponse {
-    user: User,
-    token: string
-}
-
+@injectable()
 class CreateSessionsService {
-    public async execute({ email, password }: IRequest): Promise<IResponse> {
+    constructor(
+        @inject('UserRepository')
+        private userRepository: IUserRepository,
+        
+        @inject('HashProvider')
+        private hashProvider: IHashProvider,
+    ) {}
 
-        const userRepository = getCustomRepository(UserRepository);
-        const user = await userRepository.findByEmail(email);
+    public async execute({
+                             email,
+                             password,
+                         }: ICreateSession): Promise<IUserAuthenticated> {
+        const user = await this.userRepository.findByEmail(email);
 
         if (!user) {
             throw new AppError('Incorrect email/password combination.', 401);
         }
 
-        const passwordConfirmed = await compare(password, user.password);
+        const passwordConfirmed = await this.hashProvider.compareHash(
+            password,
+            user.password,
+        );
 
         if (!passwordConfirmed) {
             throw new AppError('Incorrect email/password combination.', 401);
         }
-        const token = sign(
-            {},
-            authConfig.jwt.secret,
-            {
-                subject: user.id,
-                expiresIn: authConfig.jwt.expiresIn
-            });
+
+        const token = sign({}, authConfig.jwt.secret as Secret, {
+            subject: user.id,
+            expiresIn: authConfig.jwt.expiresIn,
+        });
 
         return {
             user,
-            token
+            token,
         };
     }
 }
