@@ -1,40 +1,41 @@
 import { getCustomRepository } from 'typeorm';
-import { compare, hash } from 'bcryptjs';
 import Customer from '../infra/typeorm/entities/Customer';
 import CustomerRepository from '../infra/typeorm/repositories/CustomersRepository';
 import AppError from '@shared/errors/AppError';
+import { IUpdateCustomer } from '@modules/customers/domain/models/IUpdateCustomer';
+import { inject, injectable } from 'tsyringe';
+import { ICustomerRepository } from '@modules/customers/domain/repositories/ICustomerRepository';
 
-interface IRequest {
-    id: string,
-    name: string,
-    email: string,
-}
-
+@injectable()
 class UpdateCustomerService {
+
+    constructor(
+        @inject('CustomersRepository')
+        private customerRepository: ICustomerRepository
+    ) {}
+    
     public async execute({ 
         id,
         name,
         email,
-    }: IRequest): Promise<Customer> {
-        const customerRepository = getCustomRepository(CustomerRepository);
+    }: IUpdateCustomer): Promise<Customer> {
         
-        const customer = await customerRepository.findById(id);
+        const customer = await this.customerRepository.findById(id);
 
         if (!customer) {
             throw new AppError('Customer not found.');
         }
         
-        const customerExist = await customerRepository.findByEmail(customer.email);
+        const customerExist = await this.customerRepository.findByEmail(customer.email);
         
         if (customerExist && email !== customer.email) {
             throw new AppError('There is already one customer with this email.');
         }
         
-        
         customer.name = name;
         customer.email = email;
         
-        await customerRepository.save(customer)
+        await this.customerRepository.save(customer)
         
         return customer;
     }

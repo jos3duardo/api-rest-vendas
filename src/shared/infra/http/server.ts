@@ -8,6 +8,7 @@ import { errors } from 'celebrate';
 import routes from './routes';
 import AppError from '../../errors/AppError';
 import '@shared/infra/typeorm';
+import '@shared/container'
 import uploads from '@config/uploads';
 import rateLimiter from '@shared/infra/http/middlewares/rateLimiter';
 

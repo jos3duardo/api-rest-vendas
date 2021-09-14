@@ -1,11 +1,11 @@
 import {Router} from 'express';
-import productsRouter from '@modules/products/infra/routes/productsRouter';
-import usersRouter from '@modules/users/infra/routes/user.routes'
-import sessionRouter from '@modules/users/infra/routes/sessionRouter';
-import passwordRouter from '@modules/users/infra/routes/passwordRouter'
-import profileRouter from '@modules/users/infra/routes/profileRouter';
-import customersRouter from '@modules/customers/infra/routes/customer.routes';
-import ordersRouter from '@modules/orders/infra/routes/orders.routes';
+import productsRouter from '@modules/products/infra/http/routes/productsRouter';
+import usersRouter from '@modules/users/infra/http/routes/user.routes'
+import sessionRouter from '@modules/users/infra/http/routes/sessionRouter';
+import passwordRouter from '@modules/users/infra/http/routes/passwordRouter'
+import profileRouter from '@modules/users/infra/http/routes/profileRouter';
+import customersRouter from '@modules/customers/infra/http/routes/customer.routes';
+import ordersRouter from '@modules/orders/infra/http/routes/orders.routes';
 const routes = Router()
 
 routes.use('/products', productsRouter);

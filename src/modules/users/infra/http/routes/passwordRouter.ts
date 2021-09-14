@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
-import SessionControlle from '../http/controllers/SessionControlle';
+import SessionControlle from '../controllers/SessionControlle';
 import ForgotPasswordController from '@modules/users/infra/http/controllers/ForgotPasswordController';
 import ResetPasswordController from '@modules/users/infra/http/controllers/ResetPasswordController';
 
