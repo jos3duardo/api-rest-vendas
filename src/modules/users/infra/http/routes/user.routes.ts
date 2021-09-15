@@ -18,6 +18,18 @@ usersRouter.get(
     usersController.index
 );
 
+usersRouter.get(
+    '/:id',
+    celebrate({
+        [Segments.PARAMS]: {
+            id: Joi.string().uuid().required(),
+        }
+    }),
+    isAuthenticated,
+    usersController.index
+);
+
+
 usersRouter.post(
     '/',
     celebrate({

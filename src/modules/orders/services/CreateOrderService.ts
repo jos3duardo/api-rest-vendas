@@ -1,8 +1,5 @@
 import CustomersRepository from '@modules/customers/infra/typeorm/repositories/CustomersRepository';
-import ProductRepository from '@modules/products/infra/typeorm/repositories/ProductsRepository';
 import AppError from '@shared/errors/AppError';
-import { getCustomRepository } from 'typeorm';
-import Order from '../infra/typeorm/entities/Order';
 import OrdersRepository from '../infra/typeorm/repositories/OrdersRepository';
 import { IRequestCreateOrder } from '@modules/orders/domain/models/IRequestCreateOrder';
 import { inject, injectable } from 'tsyringe';

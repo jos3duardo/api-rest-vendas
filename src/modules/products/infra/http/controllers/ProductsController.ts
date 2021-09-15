@@ -19,7 +19,6 @@ export default class ProductsController {
         const { id } = request.params;
         
         const showProducts = container.resolve(ShowProductService);
-        console.log(id);
         const product = await showProducts.execute({ id });
 
         return response.json(product);
@@ -57,7 +56,6 @@ export default class ProductsController {
 
     public async delete(request: Request, response: Response): Promise<Response> {
         const { id } = request.params;
-        
         const deleteProduct = container.resolve(DeleteProductService)
         
         await deleteProduct.execute({ id })

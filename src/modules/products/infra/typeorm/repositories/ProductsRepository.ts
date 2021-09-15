@@ -4,11 +4,10 @@ import { IProductsRepository } from '@modules/products/domain/repositories/IProd
 import { IFindProducts } from '@modules/products/domain/models/IFindProducts';
 import { IProductPaginate } from '@modules/products/domain/models/IProductPaginate';
 import { ICreateProduct } from '@modules/products/domain/models/ICreateProduct';
-import { IProduct } from '@modules/products/domain/models/IProduct';
 import { IUpdateStockProduct } from '@modules/products/domain/models/IUpdateStockProduct';
 
 
-class ProductRepository implements IProductsRepository{
+class ProductsRepository implements IProductsRepository{
     private ormRepository: Repository<Product>
     
     constructor() {
@@ -33,22 +32,22 @@ class ProductRepository implements IProductsRepository{
         });
     }
 
-    public async findAll(): Promise<IProduct[]> {
+    public async findAll(): Promise<Product[]> {
         return Promise.resolve([]);
     }
 
     public async findAllPaginate(): Promise<IProductPaginate> {
         const products = await this.ormRepository.createQueryBuilder().paginate();
 
-        return products as IProductPaginate;;
+        return products as IProductPaginate;
     }
 
-    public async findById(id: string): Promise<IProduct | undefined> {
-        return Promise.resolve(undefined);
+    public async findById(id: string): Promise<Product | undefined> {
+        return this.ormRepository.findOne(id);
     }
 
-    public async remove(product: IProduct): Promise<void> {
-        return Promise.resolve(undefined);
+    public async remove(product: Product): Promise<void> {
+        await this.ormRepository.remove(product);
     }
     
     public async create({ 
@@ -63,7 +62,7 @@ class ProductRepository implements IProductsRepository{
         return product;
     }
     
-    public async save(product: IProduct): Promise<IProduct> {
+    public async save(product: Product): Promise<Product> {
         await this.ormRepository.save(product);
 
         return product;
@@ -74,4 +73,4 @@ class ProductRepository implements IProductsRepository{
     }
 }
 
-export default ProductRepository;
+export default ProductsRepository;

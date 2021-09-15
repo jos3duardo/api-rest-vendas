@@ -18,9 +18,8 @@ class DeleteProductService {
     ) {}
     
     public async execute({ id }: IDeleteProduct): Promise<void> {
-        const productsRepository = getCustomRepository(ProductRepository);
 
-        const product = await productsRepository.findById(id);
+        const product = await this.productsRepository.findById(id);
 
         if (!product) {
             throw new AppError('Product not found.');
@@ -28,7 +27,7 @@ class DeleteProductService {
 
         await redisCache.invalidate('api-vendas-PRODUCT_LIST');
 
-        await productsRepository.remove(product);
+        await this.productsRepository.remove(product);
     }
 }
 
