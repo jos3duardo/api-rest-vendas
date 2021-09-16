@@ -1,10 +1,10 @@
 import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
-
 import redisCache from '@shared/cache/RedisCache';
-import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
 import { ICreateProduct } from '@modules/products/domain/models/ICreateProduct';
 import { IProduct } from '@modules/products/domain/models/IProduct';
+import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepository';
+import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
 
 @injectable()
 class CreateProductService {
@@ -23,12 +23,16 @@ class CreateProductService {
         }
         
         await redisCache.invalidate('api-vendas-PRODUCT_LIST');
+        try {
+            return  this.productsRepository.create({
+                name,
+                price,
+                quantity,
+            });    
+        } catch (e) {
+            throw new AppError(e.message)
+        }
         
-        return  this.productsRepository.create({
-            name,
-            price,
-            quantity,
-        });
     }
 }
 

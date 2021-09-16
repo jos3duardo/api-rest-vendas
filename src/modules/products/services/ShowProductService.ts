@@ -1,8 +1,9 @@
 import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
+import { IShowProduct } from '@modules/products/domain/models/IShowProduct';
+import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepository';
 import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
 import { IProduct } from '@modules/products/domain/models/IProduct';
-import { IShowProduct } from '@modules/products/domain/models/IShowProduct';
 
 
 @injectable()
