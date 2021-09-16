@@ -23,8 +23,6 @@ class CreateUserService {
         if (userExists) {
             throw new AppError('Email address is already ready used');
         }
-
-        console.log('aqui');
         const hashedPassword = await this.hashProvider.generateHash(password);
         
         try {

@@ -15,8 +15,7 @@ import UserRepository from '@modules/users/infra/typeorm/repositories/UserReposi
 import { IUserTokenRepository } from '@modules/users/domain/repositories/IUserTokenRepository';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
-import {IHashProvider} from '@modules/users/providers/HashProvider/models/IHashProvider';
-import BcryptHashProvider from '@modules/users/providers/HashProvider/implementations/BcryptHashProvider';
+import '@modules/users/providers'
 
 //a cada ciclo de vida da nossa aplicação ele mantem uma unica instancia dessa classe
 container.registerSingleton<ICustomerRepository>(
@@ -39,6 +38,3 @@ container.registerSingleton<IUserTokenRepository>(
     'UserTokensRepository', UserTokensRepository
 )
 
-container.registerSingleton<IHashProvider>(
-    'HashProvider', BcryptHashProvider
-)

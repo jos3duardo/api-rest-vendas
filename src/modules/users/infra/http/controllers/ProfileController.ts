@@ -8,7 +8,6 @@ export default class ProfileController {
     public async show(request: Request, response: Response): Promise<Response> {
         const showProfile =  container.resolve(ShowProfileService);
         const id = request.user.id;
-        
         const user = await showProfile.execute({ id });
         return response.json(classToClass(user))
     }
