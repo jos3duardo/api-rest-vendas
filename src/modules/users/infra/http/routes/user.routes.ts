@@ -26,7 +26,7 @@ usersRouter.get(
         }
     }),
     isAuthenticated,
-    usersController.index
+    usersController.show
 );
 
 
