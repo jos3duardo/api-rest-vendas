@@ -1,39 +1,39 @@
 import FakerProductsRepository from '@modules/products/domain/repositories/fakes/FakeProductsRepository';
 import CreateProductService from '@modules/products/services/CreateProductService';
 import AppError from '@shared/errors/AppError';
+import ShowProductService from '@modules/products/services/ShowProductService';
+import { response } from 'express';
 
 let fakerProductRepository: FakerProductsRepository;
 let createProduct: CreateProductService;
+let showProduct: ShowProductService;
 
-describe('CreateProduct', () => {
+describe('ShowProduct', () => {
     beforeEach(() => {
         fakerProductRepository = new FakerProductsRepository()
         createProduct = new CreateProductService(fakerProductRepository)
+        showProduct = new ShowProductService(fakerProductRepository)
     })
 
-    it('should be able to create a product', async () => {
-        const response = await createProduct.execute({
+    it('should be able to show a product', async () => {
+        const product = await createProduct.execute({
             name: 'Cubo magico',
             quantity: 2,
             price: 100
         })
+        
+        const response = await showProduct.execute({
+            id:product.id
+        })
+        
         expect(response).toHaveProperty('id')
     });
 
-    it('should not be able to create two products with the same name', async () => {
-
-        await createProduct.execute({
-            name: 'Cubo magico',
-            quantity: 2,
-            price: 100
-        })
-
+    it('should not be able to show a product with an invalid id', async () => {
         expect(
-            createProduct.execute({
-                name: 'Cubo magico',
-                quantity: 2,
-                price: 100
+            showProduct.execute({
+                id: '123'
             })
         ).rejects.toBeInstanceOf(AppError)
-    })
+    });
 })

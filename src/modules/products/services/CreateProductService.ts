@@ -17,18 +17,18 @@ class CreateProductService {
     public async execute({ name, price, quantity }: ICreateProduct): Promise<IProduct> {
         
         const productExists = await this.productsRepository.findByName(name);
-
         if (productExists) {
             throw new AppError('There is already one product with this name');
         }
         
-        await redisCache.invalidate('api-vendas-PRODUCT_LIST');
         try {
-            return  this.productsRepository.create({
+            const product = this.productsRepository.create({
                 name,
                 price,
                 quantity,
-            });    
+            });
+            
+            return product      
         } catch (e) {
             throw new AppError(e.message)
         }

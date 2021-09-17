@@ -15,11 +15,12 @@ class ProductsRepository implements IProductsRepository{
     }
     
     public async findByName(name: string): Promise<Product | undefined> {
-        return this.ormRepository.findOne({
+        const product = this.ormRepository.findOne({
             where: {
                 name,
             },
         });
+        return product 
     }
     
     public async findAllByIds(products: IFindProducts[]): Promise<Product[]> {

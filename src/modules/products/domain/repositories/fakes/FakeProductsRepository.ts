@@ -1,4 +1,3 @@
-import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepository';
 import Product from '@modules/products/infra/typeorm/entities/Product';
 import { ICreateProduct } from '@modules/products/domain/models/ICreateProduct';
 import { IFindProducts } from '@modules/products/domain/models/IFindProducts';
@@ -6,19 +5,19 @@ import { IProductPaginate } from '@modules/products/domain/models/IProductPagina
 import { IUpdateStockProduct } from '@modules/products/domain/models/IUpdateStockProduct';
 import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
 import { IProduct } from '@modules/products/domain/models/IProduct';
+import { v4 as uuidv4 } from 'uuid';
 
 class FakerProductsRepository implements IProductsRepository {
     private products: Product[] = [];
 
     public async create({ name,price,quantity }: ICreateProduct): Promise<IProduct> {
         const product = new Product()
-        
+        product.id = uuidv4();
         product.name = name
         product.price = price
         product.quantity = quantity
         
         this.products.push(product)
-        
         return product;
     }
 
@@ -54,7 +53,10 @@ class FakerProductsRepository implements IProductsRepository {
         return product
     }
 
-    public async remove(product: Product): Promise<void> {}
+    public async remove(product: Product): Promise<void> {
+        const findIndex = this.products.findIndex(findProduct => findProduct.id === product.id)
+        this.products.splice(findIndex, 1)
+    }
 
     public async save(product: Product): Promise<IProduct> {
         const findIndex = this.products.findIndex(findProduct => findProduct.id === product.id)

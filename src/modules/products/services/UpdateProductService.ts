@@ -3,13 +3,7 @@ import redisCache from '@shared/cache/RedisCache';
 import { inject, injectable } from 'tsyringe';
 import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
 import { IProduct } from '@modules/products/domain/models/IProduct';
-
-interface IRequest {
-    id: string;
-    name: string;
-    price: number;
-    quantity: number;
-}
+import { IUpdateProduct } from '@modules/products/domain/models/IUpdateProduct';
 
 @injectable()
 class UpdateProductService {
@@ -18,7 +12,7 @@ class UpdateProductService {
         private productsRepository: IProductsRepository,
     ) {}
     
-    public async execute({id, name, price, quantity}: IRequest): Promise<IProduct> {
+    public async execute({id, name, price, quantity}: IUpdateProduct): Promise<IProduct> {
 
 
         const product = await this.productsRepository.findById(id);
@@ -26,8 +20,6 @@ class UpdateProductService {
         if (!product){
             throw new AppError('Product not found');
         }
-
-        await redisCache.invalidate('api-vendas-PRODUCT_LIST')
 
         const productExists = await this.productsRepository.findByName(name);
 
