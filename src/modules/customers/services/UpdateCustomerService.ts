@@ -1,6 +1,4 @@
-import { getCustomRepository } from 'typeorm';
 import Customer from '../infra/typeorm/entities/Customer';
-import CustomerRepository from '../infra/typeorm/repositories/CustomersRepository';
 import AppError from '@shared/errors/AppError';
 import { IUpdateCustomer } from '@modules/customers/domain/models/IUpdateCustomer';
 import { inject, injectable } from 'tsyringe';
@@ -26,7 +24,7 @@ class UpdateCustomerService {
             throw new AppError('Customer not found.');
         }
         
-        const customerExist = await this.customerRepository.findByEmail(customer.email);
+        const customerExist = await this.customerRepository.findByEmail(email);
         
         if (customerExist && email !== customer.email) {
             throw new AppError('There is already one customer with this email.');
