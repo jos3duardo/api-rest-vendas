@@ -1,4 +1,5 @@
 ## API de Gestão de Vendas
+[![wakatime](https://wakatime.com/badge/user/7e68e438-f1f7-4933-b9b7-f42aeb5c2a1b.svg)](https://wakatime.com/@7e68e438-f1f7-4933-b9b7-f42aeb5c2a1b)
 
 ## Funcionalidades
 
