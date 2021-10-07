@@ -29,13 +29,13 @@ export class CreateProducts1614824262437 implements MigrationInterface {
                 },
                 {
                     name: 'created_at',
-                    type: 'timestamp',
-                    default: 'now()'
+                    type: 'timestamp with time zone',
+                    default: 'now()',
                 },
                 {
                     name: 'updated_at',
-                    type: 'timestamp',
-                    default: 'now()'
+                    type: 'timestamp with time zone',
+                    default: 'now()',
                 }
             ]
             
