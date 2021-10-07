@@ -1,0 +1,15 @@
+stages:
+    - test
+        
+        
+cache:
+    paths:
+        - node_modules/
+test:
+    stage: test
+    image: beevelop/nodejs-python
+    services:
+        - postgres
+    script: 
+        - npm i
+        - npm jest
