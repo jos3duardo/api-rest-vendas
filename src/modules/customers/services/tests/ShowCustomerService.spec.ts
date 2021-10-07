@@ -30,11 +30,10 @@ describe('ShowCustomer', () => {
     })
 
     it('should not be able to show a customer not found', async () => {
-        
-        const response = await showCustomer.execute({
-            id: '123'
-        })
-        
-        expect(response).toBeInstanceOf(AppError)
+        expect(
+            showCustomer.execute({
+                id: '123'
+            })
+        ).rejects.toBeInstanceOf(AppError)
     })
 })

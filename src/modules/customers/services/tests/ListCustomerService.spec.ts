@@ -15,7 +15,7 @@ describe('ListCustomer', () => {
         listCustomer = new ListCustomerService(fakeCustomerRepository);
     })
     
-    it('should be able to list customer', async () => {
+    it('should be able to list customers', async () => {
         await createCustomer.execute({
             name: 'Jose Eduardo',
             email: 'joseduardo@email.com'
@@ -27,7 +27,6 @@ describe('ListCustomer', () => {
         })
 
         const response = await listCustomer.execute()
-        
-        expect(response.data).toEqual(2)
+        expect(response.data.length).toBeGreaterThanOrEqual(2)
     })
 })

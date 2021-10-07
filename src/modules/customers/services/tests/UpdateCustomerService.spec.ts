@@ -29,7 +29,7 @@ describe('UpdateCustomer', () => {
             email: 'joseduardo@gmail.com'
         })
 
-        expect(response).toBe('id')
+        expect(response).toHaveProperty('id')
     })
 
     it('should not be able to update a customer with email in use', async () => {
@@ -43,24 +43,23 @@ describe('UpdateCustomer', () => {
             name: 'Jose Eduardo',
             email: 'joseduardo@email.com'
         })
-        
-        const response = await updateCustomer.execute({
-            id: customer.id,
-            name: 'Eduardo',
-            email: 'email@gmail.com'
-        })
 
-        expect(customer).toHaveProperty('id')
+        expect(
+            updateCustomer.execute({
+                id: customer.id,
+                name: 'Eduardo',
+                email: 'email@email.com'
+            })
+        ).rejects.toBeInstanceOf(AppError)
     })
 
     it('should not be able to update a customer not found', async () => {
-        
-        const response = await updateCustomer.execute({
-            id: '12312312',
-            name: 'Eduardo',
-            email: 'joseduardo@gmail.com'
-        })
-
-        expect(response).toBe([])
+        expect(
+            updateCustomer.execute({
+                id: '12312312',
+                name: 'Eduardo',
+                email: 'joseduardo@gmail.com'
+            })
+        ).rejects.toBeInstanceOf(AppError)
     })
 })

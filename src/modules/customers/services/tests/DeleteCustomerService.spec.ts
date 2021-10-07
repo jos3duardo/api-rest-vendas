@@ -1,8 +1,8 @@
 import "reflect-metadata"
 import DeleteCustomerService from '@modules/customers/services/DeleteCustomerService';
 import FakerCustomerRepository from '@modules/customers/domain/repositories/fakes/FakerCustomerRepository';
-import AppError from '@shared/errors/AppError';
 import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
+import AppError from '@shared/errors/AppError';
 
 let fakeCustomerRepository: FakerCustomerRepository;
 let createCustomer: CreateCustomerService;
@@ -31,11 +31,10 @@ describe('DeleteCustomer', () => {
 
     it('should not be able to delete a customer not found', async () => {
         
-        const response = await deleteCustomer.execute({
-            id: '123'
-        })
-        
-        //expect(response).toBeInstanceOf(AppError)
-        expect(response).toBe('Customer not found.')
+        expect(
+            deleteCustomer.execute({
+                id: '123'
+            })
+        ).rejects.toBeInstanceOf(AppError)
     })
 })
