@@ -42,7 +42,15 @@ export default {
   ],
 
   // An object that configures minimum threshold enforcement for coverage results
-  // coverageThreshold: undefined,
+  coverageThreshold: {
+      "global": {
+          "statements": 50,
+          "branches": 50,
+          "functions": 50,
+          "lines": 50,
+      },
+      
+  },
 
   // A path to a custom dependency extractor
   // dependencyExtractor: undefined,
@@ -62,8 +70,9 @@ export default {
   // A set of global variables that need to be available in all test environments
   // globals: {},
 
-  // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
-  // maxWorkers: "50%",
+  // The maximum amount of workers used to run your tests. Can be specified as % or a number. 
+  // E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
+  maxWorkers: "90%",
 
   // An array of directory names to be searched recursively up from the requiring module's location
   // moduleDirectories: [
